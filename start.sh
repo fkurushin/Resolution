@@ -4,7 +4,7 @@
 #Определяет рабочую директорию для задания. Если не задана, то рабочей является текущая директория:
 
 # Эта папка должна существовать 
-#SBATCH -D /mnt/pool/rhic/1/fkurushin/McPicoReader/TMP
+#SBATCH -D /mnt/pool/.../McPicoReader/TMP
 
 #Определяет имя задачи:
 #SBATCH -J readTree
@@ -25,8 +25,8 @@
 
 #Эти папки тоже должны существовать
 #Задаются имена файлов ошибок (stderr), и стандартного вывода (stdout).
-#SBATCH -o /mnt/pool/rhic/1/fkurushin/McPicoReader/SGE_OUT/slurm_%A_%a.out
-#SBATCH -e /mnt/pool/rhic/1/fkurushin/McPicoReader/SGE_OUT/slurm_%A_%a.err
+#SBATCH -o /mnt/pool/.../McPicoReader/SGE_OUT/slurm_%A_%a.out
+#SBATCH -e /mnt/pool/.../McPicoReader/SGE_OUT/slurm_%A_%a.err
 
 
 #This will be set to the first job ID of the array.
@@ -55,7 +55,7 @@ mkdir -p $OUT_FILE
 
 export ROOT_MACRO=${MAIN_DIR}/readTree.C
 
-source /mnt/pool/nica/5/parfenovpeter/Soft/Cherenkov/ROOT/build-cxx11/bin/thisroot.sh
+source /mnt/pool/.../Soft/Cherenkov/ROOT/build-cxx11/bin/thisroot.sh
 
 root -l -b -q $ROOT_MACRO'("'$INPUT'","'$OUTPUT'")' &>> $LOG
 
