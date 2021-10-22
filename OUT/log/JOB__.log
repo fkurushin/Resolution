@@ -1,0 +1,81 @@
+
+Processing /mnt/pool/rhic/1/fkurushin/McPicoReader/Resolution/readTree.C("list_00","/mnt/pool/rhic/1/fkurushin/McPicoReader/Resolution/OUT/files/JOB__.root")...
+Error: Invalid type 'TObitrackArray' in declaration of 'Hlist' /mnt/pool/rhic/1/fkurushin/McPicoReader/Resolution/readTree.C:96:
+Error: Function TObitrackArray Hlist(0) is not defined in current scope  /mnt/pool/rhic/1/fkurushin/McPicoReader/Resolution/readTree.C:96:
+*** Interpreter error recovered ***
+Job finished!
+
+Processing /mnt/pool/rhic/1/fkurushin/McPicoReader/Resolution/readTree.C("list_00","/mnt/pool/rhic/1/fkurushin/McPicoReader/Resolution/OUT/files/JOB__.root")...
+In file included from input_line_11:1:
+/mnt/pool/rhic/1/fkurushin/McPicoReader/Resolution/readTree.C:96:2: error: unknown type name 'TObitrackArray'
+        TObitrackArray Hlist(0);
+        ^
+Job finished!
+
+Processing /mnt/pool/rhic/1/fkurushin/McPicoReader/Resolution/readTree.C("list_00","/mnt/pool/rhic/1/fkurushin/McPicoReader/Resolution/OUT/files/JOB__.root")...
+In file included from input_line_11:1:
+/mnt/pool/rhic/1/fkurushin/McPicoReader/Resolution/readTree.C:96:2: error: unknown type name 'TObitrackArray'
+        TObitrackArray Hlist(0);
+        ^
+/mnt/pool/rhic/1/fkurushin/McPicoReader/Resolution/readTree.C:210:7: error: use of undeclared identifier 'hfile'
+                hfile.Close();
+                ^
+Job finished!
+
+Processing /mnt/pool/rhic/1/fkurushin/McPicoReader/Resolution/readTree.C("list_00","/mnt/pool/rhic/1/fkurushin/McPicoReader/Resolution/OUT/files/JOB__.root")...
+In file included from input_line_11:1:
+/mnt/pool/rhic/1/fkurushin/McPicoReader/Resolution/readTree.C:96:2: error: unknown type name 'TObitrackArray'
+        TObitrackArray Hlist(0);
+        ^
+/mnt/pool/rhic/1/fkurushin/McPicoReader/Resolution/readTree.C:210:7: error: use of undeclared identifier 'hfile'
+                hfile.Close();
+                ^
+Job finished!
+
+Processing /mnt/pool/rhic/1/fkurushin/McPicoReader/Resolution/readTree.C("list_00","/mnt/pool/rhic/1/fkurushin/McPicoReader/Resolution/OUT/files/JOB__.root")...
+In file included from input_line_11:1:
+/mnt/pool/rhic/1/fkurushin/McPicoReader/Resolution/readTree.C:96:2: error: unknown type name 'TObitrackArray'
+        TObitrackArray Hlist(0);
+        ^
+/mnt/pool/rhic/1/fkurushin/McPicoReader/Resolution/readTree.C:210:7: error: use of undeclared identifier 'hfile'
+                hfile.Close();
+                ^
+Job finished!
+
+Processing /mnt/pool/rhic/1/fkurushin/McPicoReader/Resolution/readTree.C("list_00","/mnt/pool/rhic/1/fkurushin/McPicoReader/Resolution/OUT/files/JOB__.root")...
+In file included from input_line_11:1:
+/mnt/pool/rhic/1/fkurushin/McPicoReader/Resolution/readTree.C:96:2: error: unknown type name 'TObitrackArray'
+        TObitrackArray Hlist(0);
+        ^
+/mnt/pool/rhic/1/fkurushin/McPicoReader/Resolution/readTree.C:210:7: error: use of undeclared identifier 'hfile'
+                hfile.Close();
+                ^
+Job finished!
+
+Processing /mnt/pool/rhic/1/fkurushin/McPicoReader/Resolution/readTree.C("list_00","/mnt/pool/rhic/1/fkurushin/McPicoReader/Resolution/OUT/files/JOB__.root")...
+In file included from input_line_11:1:
+/mnt/pool/rhic/1/fkurushin/McPicoReader/Resolution/readTree.C:96:2: error: unknown type name 'TObitrackArray'
+        TObitrackArray Hlist(0);
+        ^
+Job finished!
+
+Processing /mnt/pool/rhic/1/fkurushin/McPicoReader/Resolution/readTree.C("list_00","/mnt/pool/rhic/1/fkurushin/McPicoReader/Resolution/OUT/files/JOB__.root")...
+In file included from input_line_11:1:
+/mnt/pool/rhic/1/fkurushin/McPicoReader/Resolution/readTree.C:96:2: error: unknown type name 'TObitrackArray'
+        TObitrackArray Hlist(0);
+        ^
+Job finished!
+
+Processing /mnt/pool/rhic/1/fkurushin/McPicoReader/Resolution/readTree.C("list_00","/mnt/pool/rhic/1/fkurushin/McPicoReader/Resolution/OUT/files/JOB__.root")...
+In file included from input_line_11:1:
+/mnt/pool/rhic/1/fkurushin/McPicoReader/Resolution/readTree.C:96:2: error: unknown type name 'TObitrackArray'
+        TObitrackArray Hlist(0);
+        ^
+Job finished!
+
+Processing /mnt/pool/rhic/1/fkurushin/McPicoReader/Resolution/readTree.C("list_00","/mnt/pool/rhic/1/fkurushin/McPicoReader/Resolution/OUT/files/JOB__.root")...
+In file included from input_line_11:1:
+/mnt/pool/rhic/1/fkurushin/McPicoReader/Resolution/readTree.C:96:2: error: unknown type name 'TObitrackArray'
+        TObitrackArray Hlist(0);
+        ^
+Job finished!

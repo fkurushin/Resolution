@@ -205,9 +205,10 @@ void readTree(TString inListName, TString outFileName)
 		fo->cd();
 
 		// Save histograms, etc. like histogram->Write();
-		TFile hfile("Res.root", "RECREATE");
+		//TFile hfile("Res.root", "CREATE");
     		Hlist.Write();
-    		hfile.Close();
+    		//hfile.Close();
+
 		fo->Close();
 
 		std::cout << "Program is finished successfully!" << std::endl;

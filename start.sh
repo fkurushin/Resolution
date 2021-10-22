@@ -4,7 +4,7 @@
 #Определяет рабочую директорию для задания. Если не задана, то рабочей является текущая директория:
 
 # Эта папка должна существовать 
-#SBATCH -D /mnt/pool/1/rhic/fkurushin/McPicoReader/Recolution/TMP
+#SBATCH -D /mnt/pool/rhic/1/fkurushin/McPicoReader/Recolution/TMP
 
 #Определяет имя задачи:
 #SBATCH -J readTree
@@ -25,8 +25,8 @@
 
 #Эти папки тоже должны существовать
 #Задаются имена файлов ошибок (stderr), и стандартного вывода (stdout).
-#SBATCH -o /mnt/pool/1/rhic/fkurushin/McPicoReader/Resolution/SGE_OUT/slurm_%A_%a.out
-#SBATCH -e /mnt/pool/1/rhic/fkurushin/McPicoReader/Resolution/SGE_OUT/slurm_%A_%a.err
+#SBATCH -o /mnt/pool/rhic/1/fkurushin/McPicoReader/Resolution/SGE_OUT/slurm_%A_%a.out
+#SBATCH -e /mnt/pool/rhic/1/fkurushin/McPicoReader/Resolution/SGE_OUT/slurm_%A_%a.err
 
 
 #This will be set to the first job ID of the array.
@@ -35,7 +35,7 @@ export JOB_ID=$SLURM_ARRAY_JOB_ID
 export TASK_ID=$SLURM_ARRAY_TASK_ID
 
 
-export MAIN_DIR=/mnt/pool/rhic/1/fkurushin/McPicoReader
+export MAIN_DIR=/mnt/pool/rhic/1/fkurushin/McPicoReader/Resolution
 export FILELIST_DIR=${MAIN_DIR}/lists
 
 #Команды ниже копируют аутпут после выполнения команд в кавычках 
@@ -55,9 +55,8 @@ mkdir -p $OUT_FILE
 
 export ROOT_MACRO=${MAIN_DIR}/readTree.C
 
-source /mnt/pool/nica/5/parfenovpeterSoft/Cherenkov/ROOT/build-cxx11/bin/thisroot.sh
+source /mnt/pool/nica/5/parfenovpeter/Soft/Cherenkov/ROOT/build-cxx11/bin/thisroot.sh
 
 root -l -b -q $ROOT_MACRO'("'$INPUT'","'$OUTPUT'")' &>> $LOG
 
 echo "Job finished!" &>> $LOG
-echo "Job finished for real!"
