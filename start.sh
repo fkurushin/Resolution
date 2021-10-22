@@ -4,7 +4,7 @@
 #Определяет рабочую директорию для задания. Если не задана, то рабочей является текущая директория:
 
 # Эта папка должна существовать 
-#SBATCH -D /mnt/pool/rhic/1/fkurushin/McPicoReader/Recolution/TMP
+#SBATCH -D /mnt/pool/rhic/1/fkurushin/McPicoReader/Resolution/TMP
 
 #Определяет имя задачи:
 #SBATCH -J readTree
