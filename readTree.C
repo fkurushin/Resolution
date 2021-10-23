@@ -123,17 +123,17 @@ void readTree(TString inListName, TString outFileName)
 		hist[i] = new TH1F(name, title, 200, -1.0, 1.0);
 	}	
 
-	for (Int_t i = 0; i < 10; i++) {
 
-		if(bimpValues[i] < bimp &&  bimp < bimpValues[i + 1]) {	
+	for (Long64_t ievent=0; ievent < nEvents; ievent++)
+	{	
+		if (ievent % 1000 == 0) std::cout << "Event [" << ievent << "/" << nEvents << "]" << std::endl;
+		chain->GetEntry(ievent);
 
-			for (Long64_t ievent=0; ievent < nEvents; ievent++)
-			{	
-				if (ievent % 1000 == 0) std::cout << "Event [" << ievent << "/" << nEvents << "]" << std::endl;
-				chain->GetEntry(ievent);
+		// Do event-wise stuff (fill histograms, etc.)
 
-				// Do event-wise stuff (fill histograms, etc.)
+		for (Int_t i = 0; i < 10; i++) {
 
+			if(bimpValues[i] < bimp &&  bimp < bimpValues[i + 1]) {	
 
 				// Reading particles
 				for (int itrack = 0; itrack < nh; itrack++)
@@ -215,10 +215,12 @@ void readTree(TString inListName, TString outFileName)
 			    Resoulution = 0.0;
 				
 			   //if (Cut(ientry) < 0) continue;
-
 			}
-		}
+		}			    
+
 	}
+		
+	
 	
 	// Save output to the file
 	std::cout << "Save output information to the file: " << outFileName.Data() << std::endl;
