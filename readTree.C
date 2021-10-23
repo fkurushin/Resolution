@@ -1,6 +1,7 @@
 #include <iostream>
 #include <fstream>
 #include <sstream>
+#include <vector>
 
 #include <Rtypes.h>
 #include <TString.h>
@@ -92,49 +93,54 @@ void readTree(TString inListName, TString outFileName)
     	Float_t Resoulution = 0.0;
 	
     	Bool_t flag = false;	
+	
+	char name[20];
+    	char title[20];
 
-	TObjArray Hlist(0);
-    	TH1F *hist;
-    	char name[20];
-    	char title[20]; 
-	TH1F *h1st = new TH1F("htemp", "Resolution", 10, 0., 10.);
+	TH1F *h1st = new TH1F("h1temp", "Resolution", 10, 0., 10.);
     	h1st->GetXaxis()->SetTitle("Centrality bin");
    	h1st->GetYaxis()->SetTitle("Res");
-	TH1F *h2st = new TH1F("htemp", "MeanError(to compare)", 10, 0., 10.);
 
-	Hlist.Add(h1st);
-    	Hlist.Add(h2st);
-
+	TH1F *h2st = new TH1F("h2temp", "MeanError(to compare)", 10, 0., 10.);
+	h2st->GetXaxis()->SetTitle("Centrality bin");
+   	h2st->GetYaxis()->SetTitle("Res");
+		
+	TH1F *hist[10];
+		
 	/* End of init */	
 	
 	// Init output histograms, profile, etc.
 	
 	// Reading events
 
+	Long64_t nEvents = chain->GetEntries();
+	std::cout << "Read " << nFiles << " files. " << nEvents << " events total." << std::endl;
+	
+
 	for (Int_t i = 0; i < 10; i++) {
 		sprintf(name, "%.2f < bimp < %.2f", bimpValues[i], bimpValues[i + 1]);
 		sprintf(title, "Psi_Ep, %d", i + 1);
-		hist = new TH1F(name, title, 200, -1.0, 1.0);
-		Hlist.Add(hist);
+		hist[i] = new TH1F(name, title, 200, -1.0, 1.0);
+	}	
+
+	for (Int_t i = 0; i < 10; i++) {
+
+		if(bimpValues[i] < bimp &&  bimp < bimpValues[i + 1]) {	
+
+			for (Long64_t ievent=0; ievent < nEvents; ievent++)
+			{	
+				if (ievent % 1000 == 0) std::cout << "Event [" << ievent << "/" << nEvents << "]" << std::endl;
+				chain->GetEntry(ievent);
+
+				// Do event-wise stuff (fill histograms, etc.)
 
 
-		Long64_t nEvents = chain->GetEntries();
-		std::cout << "Read " << nFiles << " files. " << nEvents << " events total." << std::endl;
-
-		for (Long64_t ievent=0; ievent < nEvents; ievent++)
-		{	
-			if (ievent % 1000 == 0) std::cout << "Event [" << ievent << "/" << nEvents << "]" << std::endl;
-			chain->GetEntry(ievent);
-
-			// Do event-wise stuff (fill histograms, etc.)
-
-
-			// Reading particles
-			for (int itrack = 0; itrack < nh; itrack++)
-			{
-				// Do particle-wise stuff (fill histograms, etc.)
-				/* Conditions */
-					if (charge[itrack] != 0 && bimpValues[i] < bimp &&  bimp < bimpValues[i + 1]) {
+				// Reading particles
+				for (int itrack = 0; itrack < nh; itrack++)
+				{
+					// Do particle-wise stuff (fill histograms, etc.)
+					/* Conditions */
+					if (charge[itrack] != 0) {
 
 						    momModule = sqrt(pow(momx[itrack], 2) + pow(momy[itrack], 2) + pow(momz[itrack], 2));
 						    etta = 0.5 * log((momModule + momz[itrack]) / (momModule - momz[itrack]));
@@ -145,69 +151,82 @@ void readTree(TString inListName, TString outFileName)
 							    phi = TMath::ATan2(momy[itrack], momx[itrack]);
 							    QxL += weight * cos(harmonicNumber * phi);
 							    QyL += weight * sin(harmonicNumber * phi);
-							    qW += weight;
+							    //qW += weight;
 							    flag = true;
 							}
 						    }
+
 						    if (0.1 < etta && etta < 1.5) {
 							if (0.15 < momTransverse &&  momTransverse < 2.0) {
 							    phi = TMath::ATan2(momy[itrack], momx[itrack]);
 							    QxR += weight * cos(harmonicNumber * phi);
 							    QyR += weight * sin(harmonicNumber * phi);
-				                            //qW += weight;
+							    //qW += weight;
 							    flag = true;
 							}
 						    }
+
 						}
 						etta = 0.0;
 						momModule = 0.0;
 						momTransverse = 0.0;
 						phi = 0.0;
 						/* End of conditions */	
+					}
+					Psi_EP_L = TMath::ATan2(QyL, QxL) / harmonicNumber;
+					Psi_EP_R = TMath::ATan2(QyR, QxR) / harmonicNumber;
+					if (flag) {
+						if (qW != 0) {
+						    Resoulution = cos(2 * (Psi_EP_L - Psi_EP_R));
+						    //Resoulution /= qW;
+						    hist[i]->Fill(Resoulution);
+
+						    error = 0.5 * hist[i]->GetMeanError() / TMath::Sqrt(hist[i]->GetMean());
+						    h1st->SetBinContent(i + 1, TMath::Sqrt(hist[i]->GetMean()));
+						    h1st->SetBinError(i + 1,  error);
+
+						    h2st->SetBinContent(i + 1, hist[i]->GetMean());
+						    h2st->SetBinError(i + 1,  hist[i]->GetMeanError());
+
+
+						    /*
+						    hist->Fill(Resoulution);
+						    
+						    
+						    resolution.push_back(hist->GetMean());
+
+						    error = 0.5 * hist->GetMeanError() / TMath::Sqrt(hist->GetMean());
+						    error.push_back(error);
+						    errorGME.push_back(hist->GetMeanError())
+
+							*/
+				} else { std::cout << "Warning! qW variable has zero quantity! The program will stop immediately!" << std::endl; break; }
+			    }
+
+			    error = 0.0;
+			    flag = false;
+			    qW = 0.0;
+			    QxL = 0.0;
+			    QyL = 0.0;
+			    QxR = 0.0;
+			    QyR = 0.0;
+			    Psi_EP_L = 0.0;
+			    Psi_EP_R = 0.0;
+			    Resoulution = 0.0;
+				
+			   //if (Cut(ientry) < 0) continue;
+
 			}
-			Psi_EP_L = TMath::ATan2(QyL, QxL) / harmonicNumber;
-			Psi_EP_R = TMath::ATan2(QyR, QxR) / harmonicNumber;
-		    	if (flag) {
-				if (qW != 0) {
-				    Resoulution = cos(2 * (Psi_EP_L - Psi_EP_R));
-		                    //Resoulution /= qW;
-				    hist->Fill(Resoulution);
-
-
-				    error = 0.5 * hist->GetMeanError() / TMath::Sqrt(hist->GetMean());
-				    h1st->SetBinContent(i + 1, TMath::Sqrt(hist->GetMean()));
-				    h1st->SetBinError(i + 1,  error);
-
-				    h2st->SetBinContent(i + 1, hist->GetMean());
-				    h2st->SetBinError(i + 1,  hist->GetMeanError());
-
-
-			} else { std::cout << "Warning! qW variable has zero quantity! The program will stop immediately!" << std::endl; break; }
-		    }
-
-		    error = 0.0;
-		    flag = false;
-		    qW = 0.0;
-		    QxL = 0.0;
-		    QyL = 0.0;
-		    QxR = 0.0;
-		    QyR = 0.0;
-		    Psi_EP_L = 0.0;
-		    Psi_EP_R = 0.0;
-		    Resoulution = 0.0;
-
-	           //if (Cut(ientry) < 0) continue;
-
 		}
 	}
+	
 	// Save output to the file
 	std::cout << "Save output information to the file: " << outFileName.Data() << std::endl;
 	fo->cd();
 
 	// Save histograms, etc. like histogram->Write();
-	//TFile hfile("Res.root", "CREATE");
-	Hlist.Write();
-	//hfile.Close();
+	h1st->Write();
+	h2st->Write();
 
 	fo->Close();
 
