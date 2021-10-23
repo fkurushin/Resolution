@@ -93,7 +93,7 @@ void readTree(TString inListName, TString outFileName)
 	
     	Bool_t flag = false;	
 
-	TObitrackArray Hlist(0);
+	TObjArray Hlist(0);
     	TH1F *hist;
     	char name[20];
     	char title[20]; 
@@ -199,22 +199,23 @@ void readTree(TString inListName, TString outFileName)
 	           //if (Cut(ientry) < 0) continue;
 
 		}
+	}
+	// Save output to the file
+	std::cout << "Save output information to the file: " << outFileName.Data() << std::endl;
+	fo->cd();
 
-		// Save output to the file
-		std::cout << "Save output information to the file: " << outFileName.Data() << std::endl;
-		fo->cd();
+	// Save histograms, etc. like histogram->Write();
+	//TFile hfile("Res.root", "CREATE");
+	Hlist.Write();
+	//hfile.Close();
 
-		// Save histograms, etc. like histogram->Write();
-		//TFile hfile("Res.root", "CREATE");
-    		Hlist.Write();
-    		//hfile.Close();
+	fo->Close();
 
-		fo->Close();
+	std::cout << "Program is finished successfully!" << std::endl;
 
-		std::cout << "Program is finished successfully!" << std::endl;
-
-		// Print out timer info
-		timer.Stop();
-		timer.Print();
-		}
+	// Print out timer info
+	timer.Stop();
+	timer.Print();
+		
+	
 }
